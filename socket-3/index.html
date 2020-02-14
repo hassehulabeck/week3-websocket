@@ -1,0 +1,23 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket-klient III</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io.connect('http://localhost:8080')
+            const rubrik = document.getElementById("rubrik")
+            socket.on('info', (data) => {
+                rubrik.innerText = "Antal användare är " + data.connections
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <h1 id="rubrik"></h1>
+</body>
+
+</html>
