@@ -1,0 +1,31 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket-klient</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io.connect('http://localhost:8080')
+            const rubrik = document.getElementById("rubrik")
+            const btn = document.getElementById("btn")
+            socket.on('new client', (data) => {
+                rubrik.innerText = data.greeting
+            })
+            btn.addEventListener("click", () => {
+                socket.emit('other event', {
+                    greeting: "Hi",
+                    time: new Date().toISOString()
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <h1 id="rubrik"></h1>
+    <button id="btn">Send "Hi"</button>
+</body>
+
+</html>

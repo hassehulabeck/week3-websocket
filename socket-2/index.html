@@ -1,0 +1,30 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket-klient</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io.connect('http://localhost:8080')
+            const rubrik = document.getElementById("rubrik")
+            const lista = document.getElementById("ordlista")
+            socket.on('greeting', (data) => {
+                rubrik.innerText = data.msg
+            })
+            socket.on('freeWord', (data) => {
+                let listitem = document.createElement('li')
+                lista.appendChild(listitem)
+                listitem.innerText = data.word
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <h1 id="rubrik"></h1>
+    <ul id="ordlista"></ul>
+</body>
+
+</html>
