@@ -38,6 +38,12 @@ special.on('connection', (socket) => {
     socket.on('special shout', (data) => {
         io.of('/special').emit('till alla', data)
     })
+
+    // Rooms
+    socket.on('speak to vardagsrum', (data) => {
+        io.sockets.in('vardagsrum').emit('new info', data)
+    })
+
 })
 
 http.listen(8080, () => {

@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Socket IV - special</title>
+    <style>
+        .hide {
+            visibility: hidden;
+        }
+    </style>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -14,6 +19,12 @@
             const btnToAll = document.getElementById("sendToAll")
             const btnToSpecial = document.getElementById("sendToSpecial")
             let rubrik = document.getElementById("rubrik")
+
+            // Rooms
+            let joinBtn = document.getElementById("joinVardagsrum")
+            let leaveBtn = document.getElementById("leaveVardagsrum")
+            let sendToVardagsrum = document.getElementById("sendToVardagsrum")
+            let roomMsg = document.getElementsByName("roomMsg")[0]
 
             socket.on('welcome', (msg) => {
                 rubrik.innerText = msg.greeting
@@ -29,6 +40,27 @@
                 listitem.innerText = data
                 lista.appendChild(listitem)
             })
+
+            // Rooms
+            joinBtn.addEventListener('click', () => {
+                socket.join('vardagsrum')
+                leaveBtn.classList.remove('hide')
+                joinBtn.classList.add('hide')
+            })
+            leaveBtn.addEventListener('click', () => {
+                socket.leave('vardagsrum')
+                leaveBtn.classList.add('hide')
+                joinBtn.classList.remove('hide')
+            })
+            sendToVardagsrum.addEventListener('click', () => {
+                io.to('vardagsrum').emit('speak to vardagsrum', roomMsg.value)
+            })
+
+            socket.on('new info', () => {
+                let listitem = document.createElement('li')
+                listitem.innerText = "[Vardagsrum] " + data
+                lista.appendChild(listitem)
+            })
         })
     </script>
 
@@ -39,6 +71,12 @@
     <input type="text" name="message" />
     <button id="sendToAll">Send to all</button>
     <button id="sendToSpecial">Send only to special</button>
+    <h3>Rooms</h3>
+    <button id="joinVardagsrum">Kliv in i vardagsrummet</button>
+    <button id="leaveVardagsrum" class="hide">Lämna vardagsrummet</button>
+    <label for="roomMsg">Message to vardagsrum</label>
+    <input type="text" name="roomMsg" />
+    <button id="sendToVardagsrum">Skicka till vardagsrummet</button>
     <h1 id="rubrik"></h1>
     <ul id="lista"></ul>
 </body>
