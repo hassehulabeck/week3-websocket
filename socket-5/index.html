@@ -1,0 +1,47 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket IV</title>
+    <style>
+        /* #sendToSpecial {
+            display: none;
+        } */
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io.connect('http://localhost:8080/')
+
+            let lista = document.getElementById("lista")
+            let input = document.getElementsByName("message")[0]
+            const btnToAll = document.getElementById("sendToAll")
+            let rubrik = document.getElementById("rubrik")
+
+            socket.on('welcome', (data) => {
+                rubrik.innerText = data.greeting
+            })
+            btnToAll.addEventListener('click', () => {
+                socket.emit('shout to all', input.value)
+            })
+            socket.on('till alla', (data) => {
+                let listitem = document.createElement('li')
+                listitem.innerText = data
+                lista.appendChild(listitem)
+            })
+
+        })
+    </script>
+
+</head>
+
+<body>
+    <label for="msg">Message</label>
+    <input type="text" name="message" />
+    <button id="sendToAll">Send to all</button>
+    <h1 id="rubrik"></h1>
+    <ul id="lista"></ul>
+</body>
+
+</html>

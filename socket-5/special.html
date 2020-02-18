@@ -1,0 +1,85 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket IV - special</title>
+    <style>
+        .hide {
+            visibility: hidden;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const socket = io.connect('http://localhost:8080/special')
+
+            let lista = document.getElementById("lista")
+            let input = document.getElementsByName("message")[0]
+            const btnToAll = document.getElementById("sendToAll")
+            const btnToSpecial = document.getElementById("sendToSpecial")
+            let rubrik = document.getElementById("rubrik")
+
+            // Rooms
+            let joinBtn = document.getElementById("joinVardagsrum")
+            let leaveBtn = document.getElementById("leaveVardagsrum")
+            let stvBtn = document.getElementById("sendToVardagsrum")
+            let roomMsg = document.getElementsByName("roomMsg")[0]
+
+            socket.on('welcome', (msg) => {
+                rubrik.innerText = msg.greeting
+            })
+            btnToAll.addEventListener('click', () => {
+                socket.emit('from special to all', input.value)
+            })
+            btnToSpecial.addEventListener('click', () => {
+                socket.emit('special shout', input.value);
+            })
+            socket.on('till alla', (data) => {
+                let listitem = document.createElement('li')
+                listitem.innerText = data
+                lista.appendChild(listitem)
+            })
+
+            // Rooms
+            joinBtn.addEventListener('click', () => {
+                socket.emit('join vardagsrum')
+                leaveBtn.classList.remove('hide')
+                joinBtn.classList.add('hide')
+            })
+            leaveBtn.addEventListener('click', () => {
+                socket.emit('leave vardagsrum')
+                leaveBtn.classList.add('hide')
+                joinBtn.classList.remove('hide')
+            })
+            stvBtn.addEventListener('click', () => {
+                socket.emit('stv', roomMsg.value)
+            })
+
+            socket.on('new info', (data) => {
+                console.log("New info")
+                let listitem = document.createElement('li')
+                listitem.innerText = "[Vardagsrum] " + data
+                lista.appendChild(listitem)
+            })
+        })
+    </script>
+
+</head>
+
+<body>
+    <label for="msg">Message</label>
+    <input type="text" name="message" />
+    <button id="sendToAll">Send to all</button>
+    <button id="sendToSpecial">Send only to special</button>
+    <h3>Rooms</h3>
+    <button id="joinVardagsrum">Kliv in i vardagsrummet</button>
+    <button id="leaveVardagsrum" class="hide">Lämna vardagsrummet</button>
+    <label for="roomMsg">Message to vardagsrum</label>
+    <input type="text" name="roomMsg" />
+    <button id="sendToVardagsrum">Skicka till vardagsrummet</button>
+    <h1 id="rubrik"></h1>
+    <ul id="lista"></ul>
+</body>
+
+</html>
