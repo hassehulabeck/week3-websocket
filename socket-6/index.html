@@ -1,0 +1,38 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktiebörs</title>
+    <style>
+        label {
+            display: block;
+            margin-top: 1em;
+        }
+    </style>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="stockHandling.js"></script>
+</head>
+
+<body>
+    <div id="messageArea"></div>
+    <table>
+        <thead>
+            <td>Aktie</td>
+            <td>Högsta köpbud</td>
+            <td>Högsta säljbud</td>
+        </thead>
+        <tbody id="lista"></tbody>
+    </table>
+    <label for="aktie">Välj aktie</label>
+    <select name="aktie" id="aktie"></select>
+    <label for="kurs">Kurs</label>
+    <input type="number" name="kurs" id="kurs">
+    <label for="antal">Antal</label>
+    <input type="number" name="antal" id="antal">
+    <button id="buy">Köp</button>
+    <button id="sell">Sälj</button>
+</body>
+
+</html>

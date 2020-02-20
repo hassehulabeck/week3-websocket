@@ -1,0 +1,64 @@
+[{
+        "id": 89,
+        "name": "ABB",
+        "bids": [{
+                "id": 2000,
+                "action": "buy",
+                "value": 94,
+                "antal": 100
+            },
+            {
+                "id": 2043,
+                "action": "buy",
+                "value": 96,
+                "antal": 170
+            },
+            {
+                "id": 2348,
+                "action": "sell",
+                "value": 97,
+                "antal": 3000
+            }
+        ]
+    },
+    {
+        "id": 34,
+        "name": "Volvo",
+        "bids": [{
+                "id": 8377,
+                "action": "buy",
+                "value": 157,
+                "antal": 200
+            },
+            {
+                "id": 366,
+                "action": "buy",
+                "value": 158,
+                "antal": 4000
+            }
+        ]
+    },
+    {
+        "id": "Ab29",
+        "name": "Electrolux",
+        "bids": [{
+                "id": 8838,
+                "action": "buy",
+                "value": 193,
+                "antal": 1000
+            },
+            {
+                "id": 19874,
+                "action": "buy",
+                "value": 194,
+                "antal": 1000
+            },
+            {
+                "id": 4847,
+                "action": "sell",
+                "value": 198,
+                "antal": 10000
+            }
+        ]
+    }
+]
